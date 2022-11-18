@@ -54,4 +54,4 @@ jobs:
         script: |
           docker pull ghcr.io/olehbandrivskyi/test-react-page:main
           docker stop react-main || true && docker rm react-main || true
-          docker run -d -p 80:80 test-react-page:main --name react-main
+          docker run -d -p 80:80 ghcr.io/olehbandrivskyi/test-react-page:main --name react-main
