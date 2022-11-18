@@ -39,7 +39,7 @@ jobs:
           push: true
           tags: ${{ steps.meta_react_app.outputs.tags }}
           labels: ${{ steps.meta_react_app.outputs.labels }}
-  
+
   deploy:
     needs: publish
     runs-on: ubuntu-latest
