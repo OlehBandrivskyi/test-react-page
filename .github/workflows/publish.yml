@@ -10,38 +10,38 @@ on:
     types: [published]
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+  # publish:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     packages: write
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - name: Login to github registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Login to github registry
+  #       uses: docker/login-action@v1
+  #       with:
+  #         registry: ghcr.io
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker meta
-        uses: docker/metadata-action@v3
-        id: meta_react_app
-        with:
-          images: ghcr.io/OlehBandrivskyi/test-react-page
+  #     - name: Docker meta
+  #       uses: docker/metadata-action@v3
+  #       id: meta_react_app
+  #       with:
+  #         images: ghcr.io/OlehBandrivskyi/test-react-page
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ${{ steps.meta_react_app.outputs.tags }}
-          labels: ${{ steps.meta_react_app.outputs.labels }}
+  #     - name: Build and push
+  #       uses: docker/build-push-action@v2
+  #       with:
+  #         push: true
+  #         tags: ${{ steps.meta_react_app.outputs.tags }}
+  #         labels: ${{ steps.meta_react_app.outputs.labels }}
   
   deploy:
-    needs: publish
+#    needs: publish
     runs-on: ubuntu-latest
     steps:
     - name: Check
@@ -54,4 +54,4 @@ jobs:
         script: |
           docker pull ghcr.io/olehbandrivskyi/test-react-page:main
           docker stop react-main || true && docker rm react-main || true
-          docker run -d -p 80:80 ghcr.io/olehbandrivskyi/test-react-page:main --name react-main
+          docker run -d -p 80:80 --name react-main ghcr.io/olehbandrivskyi/test-react-page:main
